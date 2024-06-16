@@ -38,4 +38,4 @@ class ProductedString:
     RETURN_NAMES = ("STRING",)
     RETURN_TYPES = ("STRING",)
     FUNCTION = "combine_input_lists"
-    CATEGORY = "textProduct"
+    CATEGORY = "TextListProduct"

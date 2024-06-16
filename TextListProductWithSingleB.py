@@ -27,4 +27,4 @@ class TextListProductWithSingleB:
     RETURN_NAMES = ("list",)
     RETURN_TYPES = ("LIST",)
     FUNCTION = "combine_input_lists"
-    CATEGORY = "textProduct"
+    CATEGORY = "TextListProduct"
