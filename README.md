@@ -14,6 +14,8 @@ It is recommended to install this custom node in combination with the nodes from
 
 In the screenshot above, `[1girl, 1boy]` and `[blonde_hair, crown]` and `[beach, futuristic City]` are combined to create an 8-line (2 * 2 * 2) multiline string.
 
+Additionally, by connecting to the WAS Node Suite's Text Load Line From File and specifying 8 in Comfy UI's Queue Prompt, you can generate 8 patterns.
+
 ## Nodes
 
 ### TextListProduct
@@ -57,6 +59,8 @@ Comfy UI のカスタムノードです。
 ![ProductedString](<doc/スクリーンショット 2024-06-17 000135.png>)
 
 上のスクリーンショットでは、`[ 1girl, 1boy ]` と `[ blonde_hair, crown ]` と `[ beach, futuristic City ]` を掛け合わせて、8行(2 * 2 * 2)のマルチライン文字列を作っている様子です。
+
+あとは、WAS Node SuiteのText Load Line From Fileにつなげて、Comfy UIのQueue Promptに8を指定すると8パターンが生成されます。
 
 ## ノード
 
