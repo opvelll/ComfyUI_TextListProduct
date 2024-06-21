@@ -1,9 +1,8 @@
-
-from .TextListProduct import TextListProduct
-from .TextListProductWithSingleA import TextListProductWithSingleA
-from .TextListProductWithSingleB import TextListProductWithSingleB
-from .TextListProductWithSingleBoth import TextListProductWithSingleBoth
-from .ProductedString import ProductedString
+from .src.TextListProduct import TextListProduct
+from .src.TextListProductWithSingleA import TextListProductWithSingleA
+from .src.TextListProductWithSingleB import TextListProductWithSingleB
+from .src.TextListProductWithSingleBoth import TextListProductWithSingleBoth
+from .src.ProductedString import ProductedString
 
 NODE_CLASS_MAPPINGS = {
     "TextListProduct": TextListProduct,
