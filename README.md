@@ -16,6 +16,11 @@ In the screenshot above, `[1girl, 1boy]` and `[blonde_hair, crown]` and `[beach,
 
 Additionally, by connecting to the WAS Node Suite's Text Load Line From File and specifying 8 in Comfy UI's Queue Prompt, you can generate 8 patterns.
 
+## Installation
+
+Open the ComfyUI Manager, click on `Install via Git URL`, enter `https://github.com/opvelll/ComfyUI_TextListProduct`, and press OK.
+
+
 ## Nodes
 
 ### TextListProduct
@@ -46,6 +51,10 @@ You can use it to add a specified string at the beginning of the strings in the 
 
 Combine expression patterns * pose patterns * camera work patterns * ... and use the Save Text File node from the WAS Node Suite to generate a text file.
 
+## License
+
+MIT
+
 
 #### 日本語
 # Comfy UI Text List Product
@@ -61,6 +70,11 @@ Comfy UI のカスタムノードです。
 上のスクリーンショットでは、`[ 1girl, 1boy ]` と `[ blonde_hair, crown ]` と `[ beach, futuristic City ]` を掛け合わせて、8行(2 * 2 * 2)のマルチライン文字列を作っている様子です。
 
 あとは、WAS Node SuiteのText Load Line From Fileにつなげて、Comfy UIのQueue Promptに8を指定すると8パターンが生成されます。
+
+## インストール
+
+ComfyUI Managerを開いて、`Install via Git URL`をクリック、`https://github.com/opvelll/ComfyUI_TextListProduct`と入力してOKを押します。
+
 
 ## ノード
 
@@ -91,3 +105,7 @@ WAS Node SuiteのText List to Text、Save Text File、TextLoad Line From File等
 リストの文字列の先頭に指定の文字列を加えたいとか。
 
 表情パターン * ポーズパターン * カメラワークパターン * ... と組み合わせて、WAS Node SuiteのSave Text Fileノードを使って、文字列ファイルを生成するとか。
+
+## License
+
+MIT
