@@ -1,7 +1,7 @@
 import unittest
-from TextListProductWithSingleA import TextListProductWithSingleA
-from TextListProductWithSingleB import TextListProductWithSingleB
-from TextListProductWithSingleBoth import TextListProductWithSingleBoth
+from src.TextListProductWithSingleA import TextListProductWithSingleA
+from src.TextListProductWithSingleB import TextListProductWithSingleB
+from src.TextListProductWithSingleBoth import TextListProductWithSingleBoth
 
 
 class TestTextListProductWithSingle(unittest.TestCase):

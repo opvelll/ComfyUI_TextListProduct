@@ -1,5 +1,5 @@
 import unittest
-from TextListProduct import TextListProduct
+from src.TextListProduct import TextListProduct
 
 
 class TestTextListProduct(unittest.TestCase):
