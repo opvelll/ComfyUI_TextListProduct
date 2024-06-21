@@ -5,5 +5,14 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true
+  },
+  "terminal.integrated.env.windows": {
+    "PYTHONPATH": "${workspaceFolder};${workspaceFolder}\\src"
+  },
+  "terminal.integrated.env.linux": {
+    "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/src"
+  },
+  "terminal.integrated.env.osx": {
+    "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/src"
   }
 }
