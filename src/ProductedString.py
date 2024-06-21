@@ -1,7 +1,7 @@
-import itertools
+from .BaseTextListProduct import BaseTextListProduct
 
 
-class ProductedString:
+class ProductedString(BaseTextListProduct):
     def __init__(self):
         pass
 
@@ -22,18 +22,13 @@ class ProductedString:
             },
         }
 
-    def combine_input_lists(self, separator, newline_char, **kwargs):
+    def combine_input_lists(self, separator, newline_char, **kwargs) -> str:
+        # list_aから順に、接続されているものだけをリストにする
         lists = []
         for k in sorted(kwargs.keys()):
             if isinstance(kwargs[k], list):
                 lists.append(kwargs[k])
-        return (self.join_filtered_lists(separator, newline_char, *lists),)
-
-    def join_filtered_lists(self, separator, newline_char, *lists) -> str:
-        return newline_char.join(map(separator.join, self.get_filtered_product(*lists)))
-
-    def get_filtered_product(self, *lists):
-        return [filter(None, x) for x in itertools.product(*lists)]
+        return (newline_char.join(self.join_filtered_lists(separator, *lists)),)
 
     RETURN_NAMES = ("STRING",)
     RETURN_TYPES = ("STRING",)
