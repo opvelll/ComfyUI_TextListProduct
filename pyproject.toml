@@ -1,0 +1,14 @@
+[project]
+name = "comfyui_textlistproduct"
+description = "This is a custom node for Comfy UI. It mainly wraps itertools.product and can be used to create patterns by combining prompts. It is recommended to install this custom node in combination with the nodes from the WAS Node Suite."
+version = "1.0.0"
+license = "LICENSE"
+
+[project.urls]
+Repository = "https://github.com/opvelll/ComfyUI_TextListProduct"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI_TextListProduct"
+Icon = ""
