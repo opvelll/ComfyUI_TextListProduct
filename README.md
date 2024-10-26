@@ -106,6 +106,10 @@ WAS Node SuiteのText List to Text、Save Text File、TextLoad Line From File等
 
 表情パターン * ポーズパターン * カメラワークパターン * ... と組み合わせて、WAS Node SuiteのSave Text Fileノードを使って、文字列ファイルを生成するとか。
 
+## Workflow
+
+![Workflow](doc/workflow_textlistproduct.png)
+
 ## License
 
 MIT
