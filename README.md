@@ -18,7 +18,7 @@ Additionally, by connecting to the WAS Node Suite's Text Load Line From File and
 
 ## Installation
 
-Open the ComfyUI Manager, click on `Install via Git URL`, enter `https://github.com/opvelll/ComfyUI_TextListProduct`, and press OK.
+It can be installed via Install Custom Nodes in the [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)
 
 
 ## Nodes
@@ -73,7 +73,7 @@ Comfy UI のカスタムノードです。
 
 ## インストール
 
-ComfyUI Managerを開いて、`Install via Git URL`をクリック、`https://github.com/opvelll/ComfyUI_TextListProduct`と入力してOKを押します。
+[ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)のInstall Custom Nodesからインストールできます。
 
 
 ## ノード
