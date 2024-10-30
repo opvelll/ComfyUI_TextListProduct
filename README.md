@@ -47,6 +47,13 @@ This is a further shorthand node for TextListProduct. It combines multiple lists
 
 For general use, this node should work well.
 
+### ・ PromptPairConcat
+
+![Prompt Pair Concat](doc/workflow_pairconcat.png)
+
+Takes two lists of prompts as input and combines each corresponding pair of elements.
+
+
 ## Usage Examples
 
 You can use it to add a specified string at the beginning of the strings in the list.
@@ -102,6 +109,12 @@ Comfy UI のカスタムノードです。
 さらにTextListProductのショートハンドノードです。複数のリストを掛け合わせて、改行を加えて複数行の文字列にして返します。
 
 とりあえずこれを使えば間違いない。
+
+### ・ PromptPairConcat
+
+![Prompt Pair Concat](doc/workflow_pairconcat.png)
+
+2つのプロンプトリストを入力として受け取り、それぞれのリスト要素を結合します。zip関数のようなもの。
 
 ## 使用例
 
