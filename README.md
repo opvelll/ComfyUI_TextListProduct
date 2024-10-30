@@ -49,7 +49,7 @@ For general use, this node should work well.
 
 ### ・ PromptPairConcat
 
-![Prompt Pair Concat](doc/workflow_pairconcat.png)
+![PromptPairConcat](doc/workflow_prompt_pair_concat.png)
 
 Takes two lists of prompts as input and combines each corresponding pair of elements.
 
@@ -112,7 +112,7 @@ Comfy UI のカスタムノードです。
 
 ### ・ PromptPairConcat
 
-![Prompt Pair Concat](doc/workflow_pairconcat.png)
+![PromptPairConcat](doc/workflow_prompt_pair_concat.png)
 
 2つのプロンプトリストを入力として受け取り、それぞれのリスト要素を結合します。zip関数のようなもの。
 
