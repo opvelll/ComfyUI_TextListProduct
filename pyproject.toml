@@ -1,7 +1,7 @@
 [project]
 name = "ComfyUI_TextListProduct"
 description = "This is a custom node for Comfy UI. It mainly wraps itertools.product and can be used to create patterns by combining prompts. It is recommended to install this custom node in combination with the nodes from the WAS Node Suite."
-version = "1.0.0"
+version = "1.0.1"
 license = {file = "LICENSE.md"} 
 # classifiers = [
 #     # For OS-independent nodes (works on all operating systems)

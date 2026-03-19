@@ -10,7 +10,7 @@ It mainly wraps `itertools.product` and can be used to create patterns by combin
 
 It is recommended to install this custom node in combination with the nodes from the [WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui).
 
-![ProductedString](<doc/スクリーンショット 2024-06-17 000135.png>)
+![ProductedString](doc/producted-string.png)
 
 In the screenshot above, `[1girl, 1boy]` and `[blonde_hair, crown]` and `[beach, futuristic City]` are combined to create an 8-line (2 * 2 * 2) multiline string.
 
@@ -25,7 +25,7 @@ It can be installed via Install Custom Nodes in the [ComfyUI Manager](https://gi
 
 ### ・ TextListProduct
 
-![TextListProduct](<doc/スクリーンショット 2024-06-21 145008.png>)
+![TextListProduct](doc/text-list-product.png)
 
 This is a basic node. `TextListProduct` combines two lists and creates a new list joined by the specified separator.
 
@@ -41,11 +41,11 @@ In other words, it is equivalent to passing an empty string at the beginning of 
 
 These nodes also support `max_results` to cap the number of generated combinations.
 
-![TextListProductWithSingleB](<doc/スクリーンショット 2024-06-21 151730.png>)
+![TextListProductWithSingleB](doc/text-list-product-with-single-b.png)
 
 ### ・ ProductedString
 
-![ProductedString](<doc/スクリーンショット 2024-06-17 000135.png>)
+![ProductedString](doc/producted-string.png)
 
 This is a further shorthand node for TextListProduct. It combines multiple lists and returns a multiline string with line breaks.
 
@@ -84,7 +84,7 @@ Comfy UI のカスタムノードです。
 
 [WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui)のノードと組み合わせることを想定しているので、こちらのカスタムノードもインストールすることを推奨します。
 
-![ProductedString](<doc/スクリーンショット 2024-06-17 000135.png>)
+![ProductedString](doc/producted-string.png)
 
 上のスクリーンショットでは、`[ 1girl, 1boy ]` と `[ blonde_hair, crown ]` と `[ beach, futuristic City ]` を掛け合わせて、8行(2 * 2 * 2)のマルチライン文字列を作っている様子です。
 
@@ -98,7 +98,7 @@ Comfy UI のカスタムノードです。
 
 ### ・ TextListProduct
 
-![TextListProduct](<doc/スクリーンショット 2024-06-21 145008.png>)
+![TextListProduct](doc/text-list-product.png)
 
 基本的なノード。`TextListProduct` は、2つのリストを掛け合わせて、指定されたセパレータで結合した新しいリストを作成します。
 
@@ -114,11 +114,11 @@ Comfy UI のカスタムノードです。
 
 これらのノードでも `max_results` で生成件数の上限を設定できます。
 
-![TextListProductWithSingleB](<doc/スクリーンショット 2024-06-21 151730.png>)
+![TextListProductWithSingleB](doc/text-list-product-with-single-b.png)
 
 ### ・ ProductedString
 
-![ProductedString](<doc/スクリーンショット 2024-06-17 000135.png>)
+![ProductedString](doc/producted-string.png)
 
 さらにTextListProductのショートハンドノードです。複数のリストを掛け合わせて、改行を加えて複数行の文字列にして返します。
 
