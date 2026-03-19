@@ -51,7 +51,11 @@ For general use, this node should work well.
 
 ![PromptPairConcat](doc/workflow_prompt_pair_concat.png)
 
-Takes two lists of prompts as input and combines each corresponding pair of elements.
+Takes two lists of prompts as input and combines each corresponding pair of elements using the specified separator.
+
+`isClean` trims whitespace and removes duplicated separators inside each item before concatenation.
+
+`trailing_separator` optionally appends the separator to the end of each output string for prompt-building workflows.
 
 
 ## Usage Examples
@@ -114,7 +118,11 @@ Comfy UI のカスタムノードです。
 
 ![PromptPairConcat](doc/workflow_prompt_pair_concat.png)
 
-2つのプロンプトリストを入力として受け取り、それぞれのリスト要素を結合します。zip関数のようなもの。
+2つのプロンプトリストを入力として受け取り、それぞれのリスト要素を指定したセパレータで結合します。zip関数のようなもの。
+
+`isClean` を有効にすると、各要素の前後空白や余分なセパレータを整理してから結合します。
+
+`trailing_separator` を有効にすると、各出力文字列の末尾にセパレータを追加できます。プロンプトを後段で継ぎ足す用途向けです。
 
 ## 使用例
 
