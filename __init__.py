@@ -6,6 +6,8 @@ from .src.ProductedString import ProductedString
 
 from .src.PromptPairConcat import PromptPairConcat
 
+WEB_DIRECTORY = "./web"
+
 NODE_CLASS_MAPPINGS = {
     "TextListProduct": TextListProduct,
     "TextListProductWithSingleA": TextListProductWithSingleA,
