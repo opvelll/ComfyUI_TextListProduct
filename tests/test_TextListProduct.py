@@ -11,6 +11,7 @@ class TestTextListProduct(unittest.TestCase):
         list_a = ["a", "b", "c"]
         list_b = ["1", "2", "3"]
         separator = ", "
+        max_results = 0
         expected_result = [
             "a, 1",
             "a, 2",
@@ -22,7 +23,7 @@ class TestTextListProduct(unittest.TestCase):
             "c, 2",
             "c, 3",
         ]
-        result = self.tlp.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp.combine_input_lists(separator, max_results, list_a, list_b)
         self.assertEqual(result, (expected_result,))
 
     # list_aが一つの場合
@@ -30,8 +31,9 @@ class TestTextListProduct(unittest.TestCase):
         list_a = ["a"]
         list_b = ["1", "2", "3"]
         separator = ", "
+        max_results = 0
         expected_result = ["a, 1", "a, 2", "a, 3"]
-        result = self.tlp.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp.combine_input_lists(separator, max_results, list_a, list_b)
         self.assertEqual(result, (expected_result,))
 
     # list_bが一つの場合
@@ -39,8 +41,9 @@ class TestTextListProduct(unittest.TestCase):
         list_a = ["a", "b", "c"]
         list_b = ["1"]
         separator = ", "
+        max_results = 0
         expected_result = ["a, 1", "b, 1", "c, 1"]
-        result = self.tlp.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp.combine_input_lists(separator, max_results, list_a, list_b)
         self.assertEqual(result, (expected_result,))
 
     # list_aが空の場合
@@ -48,8 +51,9 @@ class TestTextListProduct(unittest.TestCase):
         list_a = []
         list_b = ["1", "2", "3"]
         separator = ", "
+        max_results = 0
         expected_result = []
-        result = self.tlp.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp.combine_input_lists(separator, max_results, list_a, list_b)
         self.assertEqual(result, (expected_result,))
 
     # list_aとlist_bが空の場合
@@ -57,8 +61,9 @@ class TestTextListProduct(unittest.TestCase):
         list_a = []
         list_b = []
         separator = ", "
+        max_results = 0
         expected_result = []
-        result = self.tlp.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp.combine_input_lists(separator, max_results, list_a, list_b)
         self.assertEqual(result, (expected_result,))
 
     # list_aに空文字列が含まれる場合
@@ -66,6 +71,7 @@ class TestTextListProduct(unittest.TestCase):
         list_a = ["a", "", "c"]
         list_b = ["1", "2", "3"]
         separator = ", "
+        max_results = 0
         expected_result = [
             "a, 1",
             "a, 2",
@@ -77,7 +83,7 @@ class TestTextListProduct(unittest.TestCase):
             "c, 2",
             "c, 3",
         ]
-        result = self.tlp.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp.combine_input_lists(separator, max_results, list_a, list_b)
         self.assertEqual(result, (expected_result,))
 
     # list_bに空文字列が含まれる場合
@@ -85,6 +91,7 @@ class TestTextListProduct(unittest.TestCase):
         list_a = ["a", "b", "c"]
         list_b = ["1", "", "3"]
         separator = ", "
+        max_results = 0
         expected_result = [
             "a, 1",
             "a",
@@ -96,7 +103,7 @@ class TestTextListProduct(unittest.TestCase):
             "c",
             "c, 3",
         ]
-        result = self.tlp.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp.combine_input_lists(separator, max_results, list_a, list_b)
         self.assertEqual(result, (expected_result,))
 
     # list_aとlist_bに空文字列が含まれる場合
@@ -104,8 +111,9 @@ class TestTextListProduct(unittest.TestCase):
         list_a = ["a", "", "c"]
         list_b = ["1", "", "3"]
         separator = ", "
+        max_results = 0
         expected_result = ["a, 1", "a", "a, 3", "1", "3", "c, 1", "c", "c, 3"]
-        result = self.tlp.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp.combine_input_lists(separator, max_results, list_a, list_b)
         self.assertEqual(result, (expected_result,))
 
     # separatorが空文字列の場合
@@ -113,8 +121,18 @@ class TestTextListProduct(unittest.TestCase):
         list_a = ["a", "b", "c"]
         list_b = ["1", "2", "3"]
         separator = ""
+        max_results = 0
         expected_result = ["a1", "a2", "a3", "b1", "b2", "b3", "c1", "c2", "c3"]
-        result = self.tlp.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp.combine_input_lists(separator, max_results, list_a, list_b)
+        self.assertEqual(result, (expected_result,))
+
+    def test_combine_input_lists_with_max_results(self):
+        list_a = ["a", "b", "c"]
+        list_b = ["1", "2", "3"]
+        separator = ", "
+        max_results = 4
+        expected_result = ["a, 1", "a, 2", "a, 3", "b, 1"]
+        result = self.tlp.combine_input_lists(separator, max_results, list_a, list_b)
         self.assertEqual(result, (expected_result,))
 
 

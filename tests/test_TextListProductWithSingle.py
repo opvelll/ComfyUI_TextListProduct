@@ -15,6 +15,7 @@ class TestTextListProductWithSingle(unittest.TestCase):
         list_a = ["a", "b", "c"]
         list_b = ["1", "2", "3"]
         separator = ", "
+        max_results = 0
         expected_result = [
             "a",
             "a, 1",
@@ -29,7 +30,9 @@ class TestTextListProductWithSingle(unittest.TestCase):
             "c, 2",
             "c, 3",
         ]
-        result = self.tlp_single_a.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp_single_a.combine_input_lists(
+            separator, max_results, list_a, list_b
+        )
         self.assertEqual(result, (expected_result,))
 
     # TextListProductWithSingleB一般的なケース
@@ -37,6 +40,7 @@ class TestTextListProductWithSingle(unittest.TestCase):
         list_a = ["a", "b", "c"]
         list_b = ["1", "2", "3"]
         separator = ", "
+        max_results = 0
         expected_result = [
             "1",
             "2",
@@ -51,7 +55,9 @@ class TestTextListProductWithSingle(unittest.TestCase):
             "c, 2",
             "c, 3",
         ]
-        result = self.tlp_single_b.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp_single_b.combine_input_lists(
+            separator, max_results, list_a, list_b
+        )
         self.assertEqual(result, (expected_result,))
 
     # TextListProductWithSingleBoth一般的なケース
@@ -59,6 +65,7 @@ class TestTextListProductWithSingle(unittest.TestCase):
         list_a = ["a", "b", "c"]
         list_b = ["1", "2", "3"]
         separator = ", "
+        max_results = 0
         expected_result = [
             "1",
             "2",
@@ -76,7 +83,20 @@ class TestTextListProductWithSingle(unittest.TestCase):
             "c, 2",
             "c, 3",
         ]
-        result = self.tlp_single_both.combine_input_lists(separator, list_a, list_b)
+        result = self.tlp_single_both.combine_input_lists(
+            separator, max_results, list_a, list_b
+        )
+        self.assertEqual(result, (expected_result,))
+
+    def test_combine_input_lists_with_single_both_respects_max_results(self):
+        list_a = ["a", "b", "c"]
+        list_b = ["1", "2", "3"]
+        separator = ", "
+        max_results = 5
+        expected_result = ["1", "2", "3", "a", "a, 1"]
+        result = self.tlp_single_both.combine_input_lists(
+            separator, max_results, list_a, list_b
+        )
         self.assertEqual(result, (expected_result,))
 
 

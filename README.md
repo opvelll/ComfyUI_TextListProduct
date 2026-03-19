@@ -29,6 +29,8 @@ It can be installed via Install Custom Nodes in the [ComfyUI Manager](https://gi
 
 This is a basic node. `TextListProduct` combines two lists and creates a new list joined by the specified separator.
 
+`max_results` can be used to stop generation early when the cartesian product would become too large. `0` means unlimited.
+
 ### ・ TextListProductWithSingleA 
 ### ・ TextListProductWithSingleB
 ### ・ TextListProductWithSingleBoth
@@ -36,6 +38,8 @@ This is a basic node. `TextListProduct` combines two lists and creates a new lis
 These nodes are shorthand nodes for when you want to use single words from one or both lists.
 
 In other words, it is equivalent to passing an empty string at the beginning of the list passed to TextListProduct.
+
+These nodes also support `max_results` to cap the number of generated combinations.
 
 ![TextListProductWithSingleB](<doc/スクリーンショット 2024-06-21 151730.png>)
 
@@ -46,6 +50,8 @@ In other words, it is equivalent to passing an empty string at the beginning of 
 This is a further shorthand node for TextListProduct. It combines multiple lists and returns a multiline string with line breaks.
 
 For general use, this node should work well.
+
+`max_results` can be used here as well to cap the number of generated lines.
 
 ### ・ PromptPairConcat
 
@@ -96,6 +102,8 @@ Comfy UI のカスタムノードです。
 
 基本的なノード。`TextListProduct` は、2つのリストを掛け合わせて、指定されたセパレータで結合した新しいリストを作成します。
 
+`max_results` を使うと、組み合わせ数が大きくなりすぎる場合でも途中で打ち切れます。`0` は無制限です。
+
 #### ・ TextListProductWithSingleA 
 #### ・ TextListProductWithSingleB 
 #### ・ TextListProductWithSingleBoth
@@ -103,6 +111,8 @@ Comfy UI のカスタムノードです。
 これらのノードは、片方、または両方のリストの単語単体を使いたいときのショートハンド用ノードです。
 
 つまりTextListProductに渡すリストの先頭に空文字を渡した時と同じです。
+
+これらのノードでも `max_results` で生成件数の上限を設定できます。
 
 ![TextListProductWithSingleB](<doc/スクリーンショット 2024-06-21 151730.png>)
 
@@ -113,6 +123,8 @@ Comfy UI のカスタムノードです。
 さらにTextListProductのショートハンドノードです。複数のリストを掛け合わせて、改行を加えて複数行の文字列にして返します。
 
 とりあえずこれを使えば間違いない。
+
+このノードでも `max_results` を使って出力行数の上限を設定できます。
 
 ### ・ PromptPairConcat
 

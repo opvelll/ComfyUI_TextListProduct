@@ -2,22 +2,21 @@ from .BaseTextListProduct import BaseTextListProduct
 
 
 class TextListProductWithSingleBoth(BaseTextListProduct):
-    def __init__(self):
-        pass
-
     @classmethod
-    def INPUT_TYPES(s):
+    def INPUT_TYPES(cls):
         return {
             "required": {
-                "separator": ("STRING", {"default": ", "}),
+                **cls.get_common_input_types(),
                 "list_a": ("LIST", {"forceInput": True}),
                 "list_b": ("LIST", {"forceInput": True}),
             },
         }
 
-    def combine_input_lists(self, separator, list_a, list_b):
+    def combine_input_lists(self, separator, max_results, list_a, list_b):
         return (
-            list(self.join_filtered_lists(separator, [""] + list_a, [""] + list_b)),
+            self.collect_joined_lists(
+                separator, [""] + list_a, [""] + list_b, max_results=max_results
+            ),
         )
 
     RETURN_NAMES = ("list",)
