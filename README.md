@@ -8,13 +8,15 @@ This is a custom node for Comfy UI.
 
 It mainly wraps `itertools.product` and can be used to create patterns by combining prompts.
 
-This package includes nodes for creating `LIST` values from strings, so no other custom node suite is required for basic list creation and prompt combination.
+This package works with a custom `LIST` socket that carries a Python `list[str]`. Typically, you create a `LIST` from strings with `Multiline String to List` or `Strings to List`, then pass it to the product and concatenation nodes.
+
+You can also supply compatible `LIST` values from other custom nodes, such as Text List from the [WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui) or [CR Prompt List](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki/List-Nodes#cr-prompt-list) from [ComfyUI_Comfyroll_CustomNodes](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes).
+
+This Python `LIST` is passed through the workflow as one value. It is different from ComfyUI's sequential processing list; use `Text List to Sequence` only when downstream nodes should run once for each string.
 
 ![ProductedString](doc/producted-string.png)
 
-In the screenshot above, `[1girl, 1boy]` and `[blonde_hair, crown]` and `[beach, futuristic City]` are combined to create an 8-line (2 * 2 * 2) multiline string. The screenshot also shows an optional workflow using WAS Node Suite nodes.
-
-The [WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui) and [ComfyUI_Comfyroll_CustomNodes](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes) remain compatible optional integrations for file input, saving, and other text utilities.
+In the screenshot above, WAS Text List nodes supply three compatible Python lists: `[1girl, 1boy]`, `[blonde_hair, crown]`, and `[beach, futuristic City]`. `Producted String` combines them into an 8-line (2 * 2 * 2) multiline string. The included string-to-LIST nodes can be used in the same position without WAS Node Suite.
 
 ## Installation
 
@@ -37,11 +39,11 @@ For example, entering `red`, `green`, and `blue` on separate lines produces `["r
 
 Collects up to seven connected string inputs (`text_a` through `text_g`) into one `LIST` in input order. Unconnected inputs are skipped, while connected empty strings are preserved.
 
-Use this node when text values already come from separate nodes. It provides a direct replacement for the list-building part of the WAS Node Suite's Text List node.
+Use this node when text values already come from separate nodes. Its output is compatible with the same `LIST` inputs as WAS Text List and other text-list nodes.
 
 ### ・ TextListToSequence
 
-Converts this package's custom `LIST` value into ComfyUI's sequential `STRING` output. Downstream nodes that normally accept one string are executed once for each list item.
+Converts a Python text `LIST` into ComfyUI's sequential `STRING` output. Downstream nodes that normally accept one string are executed once for each list item.
 
 The input must contain at least one item, and every item must be a string. Empty string items are valid and cause one downstream execution with an empty string. An empty list raises a clear error because ComfyUI cannot safely process an empty sequential list.
 
@@ -112,13 +114,15 @@ Comfy UI のカスタムノードです。
 
 主にitertools.productをラップしたもので、プロンプトをかけ合わせてパターンを作ることに利用できます。
 
-文字列から `LIST` を作るノードも含まれているため、基本的なリスト作成とプロンプトの組み合わせは、ほかのカスタムノード集を追加せずに利用できます。
+このパッケージでは、Pythonの `list[str]` を運ぶ独自の `LIST` ソケットを使用します。基本的には `Multiline String to List` または `Strings to List` で文字列から `LIST` を作り、積や連結を行うノードへ渡します。
+
+[WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui)のText Listや、[ComfyUI_Comfyroll_CustomNodes](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes)の[CR Prompt List](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki/List-Nodes#cr-prompt-list)など、ほかのカスタムノードが出力する互換 `LIST` を入力しても構いません。
+
+このPython `LIST` は、ワークフロー内では1つの値として渡されます。ComfyUIの逐次処理用リストとは別物で、各文字列について後段ノードを1回ずつ実行したい場合だけ `Text List to Sequence` を使用します。
 
 ![ProductedString](doc/producted-string.png)
 
-上のスクリーンショットでは、`[ 1girl, 1boy ]` と `[ blonde_hair, crown ]` と `[ beach, futuristic City ]` を掛け合わせて、8行(2 * 2 * 2)のマルチライン文字列を作っている様子です。この画像には、任意連携の例としてWAS Node Suiteのノードも含まれています。
-
-[WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui)や[ComfyUI_Comfyroll_CustomNodes](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes)は、ファイル入出力、保存、その他のテキスト処理に任意で組み合わせられます。
+上のスクリーンショットでは、WASのText Listノードから互換Pythonリスト `[ 1girl, 1boy ]`、`[ blonde_hair, crown ]`、`[ beach, futuristic City ]` を受け取り、`Producted String` で8行（2 * 2 * 2）のマルチライン文字列を作っています。WAS Node Suiteを使わず、このパッケージの文字列→LISTノードを同じ位置に接続することもできます。
 ## インストール
 
 [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)のInstall Custom Nodesからインストールできます。
@@ -140,11 +144,11 @@ Comfy UI のカスタムノードです。
 
 接続された最大7個の文字列入力（`text_a`～`text_g`）を、入力順に1つの `LIST` へまとめます。未接続の入力は無視し、接続された空文字列は保持します。
 
-文字列が別々のノードから渡される場合に使用します。WAS Node SuiteのText Listノードが担っていたリスト作成部分を直接置き換えられます。
+文字列が別々のノードから渡される場合に使用します。出力はWASのText Listなどが出力する `LIST` と同様に、このパッケージのLIST入力へ接続できます。
 
 ### ・ TextListToSequence
 
-このパッケージ独自の `LIST` を、ComfyUI標準の逐次処理用 `STRING` 出力へ変換します。通常は1つの文字列を受け取る後段ノードが、LISTの各要素について1回ずつ実行されます。
+Pythonのテキスト `LIST` を、ComfyUI標準の逐次処理用 `STRING` 出力へ変換します。通常は1つの文字列を受け取る後段ノードが、LISTの各要素について1回ずつ実行されます。
 
 入力には1つ以上の要素が必要で、すべて文字列でなければなりません。空文字列の要素は有効で、後段を空文字列で1回実行します。空LISTはComfyUIが安全に処理できないため、分かりやすいエラーを返します。
 
@@ -206,7 +210,7 @@ Comfy UI のカスタムノードです。
 
 ![Workflow](doc/workflow_textlistproduct.png)
 
-この画像はWAS Node Suiteとの任意連携例です。LISTの作成自体は、このパッケージの `Multiline String to List` または `Strings to List` だけで行えます。
+この画像ではWASのText Listが互換 `LIST` を供給しています。同じ位置に、このパッケージの `Multiline String to List` または `Strings to List` を接続することもできます。
 
 ## License
 
