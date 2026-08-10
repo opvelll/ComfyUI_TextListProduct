@@ -3,6 +3,9 @@ from .src.TextListProductWithSingleA import TextListProductWithSingleA
 from .src.TextListProductWithSingleB import TextListProductWithSingleB
 from .src.TextListProductWithSingleBoth import TextListProductWithSingleBoth
 from .src.ProductedString import ProductedString
+from .src.MultilineStringToList import MultilineStringToList
+from .src.StringsToList import StringsToList
+from .src.TextListToSequence import TextListToSequence
 
 from .src.PromptPairConcat import PromptPairConcat
 
@@ -15,6 +18,9 @@ NODE_CLASS_MAPPINGS = {
     "TextListProductWithSingleBoth": TextListProductWithSingleBoth,
     "ProductedString": ProductedString,
     "PromptPairConcat": PromptPairConcat,
+    "MultilineStringToList": MultilineStringToList,
+    "StringsToList": StringsToList,
+    "TextListToSequence": TextListToSequence,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -24,4 +30,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "TextListProductWithSingleBoth": "Text List Product With Single Both",
     "ProductedString": "Producted String",
     "PromptPairConcat": "Prompt Pair Concat",
+    "MultilineStringToList": "Multiline String to List",
+    "StringsToList": "Strings to List",
+    "TextListToSequence": "Text List to Sequence",
 }

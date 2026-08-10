@@ -8,13 +8,13 @@ This is a custom node for Comfy UI.
 
 It mainly wraps `itertools.product` and can be used to create patterns by combining prompts.
 
-It is recommended to install this custom node in combination with the nodes from the [WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui).
+This package includes nodes for creating `LIST` values from strings, so no other custom node suite is required for basic list creation and prompt combination.
 
 ![ProductedString](doc/producted-string.png)
 
-In the screenshot above, `[1girl, 1boy]` and `[blonde_hair, crown]` and `[beach, futuristic City]` are combined to create an 8-line (2 * 2 * 2) multiline string.
+In the screenshot above, `[1girl, 1boy]` and `[blonde_hair, crown]` and `[beach, futuristic City]` are combined to create an 8-line (2 * 2 * 2) multiline string. The screenshot also shows an optional workflow using WAS Node Suite nodes.
 
-By connecting it to the WAS Node Suite's "Text Load Line From File" or the [CR Prompt List](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki/List-Nodes#cr-prompt-list) node from [ComfyUI_Comfyroll_CustomNodes](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes), you can generate 8 different patterns.
+The [WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui) and [ComfyUI_Comfyroll_CustomNodes](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes) remain compatible optional integrations for file input, saving, and other text utilities.
 
 ## Installation
 
@@ -22,6 +22,32 @@ It can be installed via Install Custom Nodes in the [ComfyUI Manager](https://gi
 
 
 ## Nodes
+
+### ・ MultilineStringToList
+
+Converts a multiline string into a `LIST`, with one item per line.
+
+- `trim_whitespace` removes whitespace around each line. It is enabled by default.
+- `keep_empty_lines` preserves empty lines as empty string items. It is disabled by default.
+- Empty input returns an empty list, and comment-like lines are kept as normal text.
+
+For example, entering `red`, `green`, and `blue` on separate lines produces `["red", "green", "blue"]`.
+
+### ・ StringsToList
+
+Collects up to seven connected string inputs (`text_a` through `text_g`) into one `LIST` in input order. Unconnected inputs are skipped, while connected empty strings are preserved.
+
+Use this node when text values already come from separate nodes. It provides a direct replacement for the list-building part of the WAS Node Suite's Text List node.
+
+### ・ TextListToSequence
+
+Converts this package's custom `LIST` value into ComfyUI's sequential `STRING` output. Downstream nodes that normally accept one string are executed once for each list item.
+
+The input must contain at least one item, and every item must be a string. Empty string items are valid and cause one downstream execution with an empty string. An empty list raises a clear error because ComfyUI cannot safely process an empty sequential list.
+
+For sequential prompt generation, connect nodes as follows:
+
+`TextListProduct → Text List to Sequence → CLIP Text Encode`
 
 ### ・ TextListProduct
 
@@ -68,7 +94,11 @@ Takes two lists of prompts as input and combines each corresponding pair of elem
 
 You can use it to add a specified string at the beginning of the strings in the list.
 
-Combine expression patterns * pose patterns * camera work patterns * ... and use the Save Text File node from the WAS Node Suite to generate a text file.
+Enter expression patterns, pose patterns, and camera-work patterns in separate `Multiline String to List` nodes, then connect those lists to `Producted String` to generate every combination.
+
+To process each generated combination separately in ComfyUI, use `TextListProduct` instead of `Producted String`, then connect its output through `Text List to Sequence` to a normal string input such as `CLIP Text Encode`.
+
+If needed, the resulting text can still be passed to optional external nodes such as Save Text File from the WAS Node Suite.
 
 ## License
 
@@ -82,19 +112,45 @@ Comfy UI のカスタムノードです。
 
 主にitertools.productをラップしたもので、プロンプトをかけ合わせてパターンを作ることに利用できます。
 
-[WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui)のノードと組み合わせることを想定しているので、こちらのカスタムノードもインストールすることを推奨します。
+文字列から `LIST` を作るノードも含まれているため、基本的なリスト作成とプロンプトの組み合わせは、ほかのカスタムノード集を追加せずに利用できます。
 
 ![ProductedString](doc/producted-string.png)
 
-上のスクリーンショットでは、`[ 1girl, 1boy ]` と `[ blonde_hair, crown ]` と `[ beach, futuristic City ]` を掛け合わせて、8行(2 * 2 * 2)のマルチライン文字列を作っている様子です。
+上のスクリーンショットでは、`[ 1girl, 1boy ]` と `[ blonde_hair, crown ]` と `[ beach, futuristic City ]` を掛け合わせて、8行(2 * 2 * 2)のマルチライン文字列を作っている様子です。この画像には、任意連携の例としてWAS Node Suiteのノードも含まれています。
 
-あとは、WAS Node SuiteのText Load Line From Fileや[ComfyUI_Comfyroll_CustomNodes](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes)の[CR Prompt List](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki/List-Nodes#cr-prompt-list)につなげることで、8パターンを生成することができます。
+[WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui)や[ComfyUI_Comfyroll_CustomNodes](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes)は、ファイル入出力、保存、その他のテキスト処理に任意で組み合わせられます。
 ## インストール
 
 [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)のInstall Custom Nodesからインストールできます。
 
 
 ## ノード
+
+### ・ MultilineStringToList
+
+複数行の文字列を、1行につき1要素の `LIST` に変換します。
+
+- `trim_whitespace` は各行の前後空白を除去します。既定で有効です。
+- `keep_empty_lines` は空行を空文字列の要素として保持します。既定では無効です。
+- 入力が空なら空LISTを返し、コメントのように見える行も通常の文字列として保持します。
+
+たとえば、`red`、`green`、`blue` を別々の行に入力すると、`["red", "green", "blue"]` を返します。
+
+### ・ StringsToList
+
+接続された最大7個の文字列入力（`text_a`～`text_g`）を、入力順に1つの `LIST` へまとめます。未接続の入力は無視し、接続された空文字列は保持します。
+
+文字列が別々のノードから渡される場合に使用します。WAS Node SuiteのText Listノードが担っていたリスト作成部分を直接置き換えられます。
+
+### ・ TextListToSequence
+
+このパッケージ独自の `LIST` を、ComfyUI標準の逐次処理用 `STRING` 出力へ変換します。通常は1つの文字列を受け取る後段ノードが、LISTの各要素について1回ずつ実行されます。
+
+入力には1つ以上の要素が必要で、すべて文字列でなければなりません。空文字列の要素は有効で、後段を空文字列で1回実行します。空LISTはComfyUIが安全に処理できないため、分かりやすいエラーを返します。
+
+プロンプトを逐次処理する場合は、次のように接続します。
+
+`TextListProduct → Text List to Sequence → CLIP Text Encode`
 
 ### ・ TextListProduct
 
@@ -140,11 +196,17 @@ Comfy UI のカスタムノードです。
 
 リストの文字列の先頭に指定の文字列を加えたいとか。
 
-表情パターン * ポーズパターン * カメラワークパターン * ... と組み合わせて、WAS Node SuiteのSave Text Fileノードを使って、文字列ファイルを生成するとか。
+表情、ポーズ、カメラワークの各パターンを別々の `Multiline String to List` ノードへ入力し、それぞれを `Producted String` へ接続すると、すべての組み合わせを生成できます。
+
+生成した組み合わせをComfyUIで1件ずつ処理する場合は、`Producted String` ではなく `TextListProduct` を使い、その出力を `Text List to Sequence` 経由で `CLIP Text Encode` などの通常の文字列入力へ接続します。
+
+必要であれば、生成した文字列をWAS Node SuiteのSave Text Fileなど、任意の外部ノードへ渡すこともできます。
 
 ## Workflow
 
 ![Workflow](doc/workflow_textlistproduct.png)
+
+この画像はWAS Node Suiteとの任意連携例です。LISTの作成自体は、このパッケージの `Multiline String to List` または `Strings to List` だけで行えます。
 
 ## License
 

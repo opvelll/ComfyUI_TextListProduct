@@ -18,6 +18,9 @@ class TestNodeRegistration(unittest.TestCase):
             "TextListProductWithSingleBoth",
             "ProductedString",
             "PromptPairConcat",
+            "MultilineStringToList",
+            "StringsToList",
+            "TextListToSequence",
         }
         self.assertEqual(set(PLUGIN_INIT.NODE_CLASS_MAPPINGS.keys()), expected_keys)
         self.assertEqual(
