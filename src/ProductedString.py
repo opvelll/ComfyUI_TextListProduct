@@ -19,21 +19,20 @@ class ProductedString(BaseTextListProduct):
             },
         }
 
-    def combine_input_lists(self, separator, max_results, newline_char, **kwargs) -> str:
+    def combine_input_lists(
+        self, separator, max_results, newline_char, **kwargs
+    ) -> tuple[str, list[str]]:
         # list_aから順に、接続されているものだけをリストにする
         lists = []
         for k in sorted(kwargs.keys()):
             if isinstance(kwargs[k], list):
                 lists.append(kwargs[k])
-        return (
-            newline_char.join(
-                self.join_filtered_lists(
-                    separator, *lists, max_results=max_results
-                )
-            ),
+        results = list(
+            self.join_filtered_lists(separator, *lists, max_results=max_results)
         )
+        return (newline_char.join(results), results)
 
-    RETURN_NAMES = ("STRING",)
-    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("STRING", "list")
+    RETURN_TYPES = ("STRING", "LIST")
     FUNCTION = "combine_input_lists"
     CATEGORY = "TextListProduct"

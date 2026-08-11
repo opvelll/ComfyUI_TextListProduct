@@ -11,7 +11,13 @@ class TestProductedString(unittest.TestCase):
         result = self.node.combine_input_lists(
             ", ", 0, "\n", list_a=["a", "b"], list_b=["1", "2"]
         )
-        self.assertEqual(result, ("a, 1\na, 2\nb, 1\nb, 2",))
+        self.assertEqual(
+            result,
+            (
+                "a, 1\na, 2\nb, 1\nb, 2",
+                ["a, 1", "a, 2", "b, 1", "b, 2"],
+            ),
+        )
 
     def test_combine_input_lists_only_connected_lists_are_used(self):
         result = self.node.combine_input_lists(
@@ -23,29 +29,40 @@ class TestProductedString(unittest.TestCase):
             list_f=["x"],
             ignored="not-a-list",
         )
-        self.assertEqual(result, ("a | 1 | x\na | 2 | x",))
+        self.assertEqual(
+            result,
+            ("a | 1 | x\na | 2 | x", ["a | 1 | x", "a | 2 | x"]),
+        )
 
     def test_combine_input_lists_empty_when_no_lists_are_connected(self):
         result = self.node.combine_input_lists(", ", 0, "\n")
-        self.assertEqual(result, ("",))
+        self.assertEqual(result, ("", []))
 
     def test_combine_input_lists_filters_empty_strings(self):
         result = self.node.combine_input_lists(
             ", ", 0, "\n", list_a=["a", ""], list_b=["1", ""]
         )
-        self.assertEqual(result, ("a, 1\na\n1",))
+        self.assertEqual(result, ("a, 1\na\n1", ["a, 1", "a", "1"]))
 
     def test_combine_input_lists_uses_custom_newline_character(self):
         result = self.node.combine_input_lists(
             ", ", 0, " / ", list_a=["a"], list_b=["1", "2"]
         )
-        self.assertEqual(result, ("a, 1 / a, 2",))
+        self.assertEqual(result, ("a, 1 / a, 2", ["a, 1", "a, 2"]))
 
     def test_combine_input_lists_respects_max_results(self):
         result = self.node.combine_input_lists(
             ", ", 3, "\n", list_a=["a", "b"], list_b=["1", "2", "3"]
         )
-        self.assertEqual(result, ("a, 1\na, 2\na, 3",))
+        self.assertEqual(
+            result,
+            ("a, 1\na, 2\na, 3", ["a, 1", "a, 2", "a, 3"]),
+        )
+
+    def test_node_definition_exposes_regular_string_and_custom_list(self):
+        self.assertEqual(self.node.RETURN_NAMES, ("STRING", "list"))
+        self.assertEqual(self.node.RETURN_TYPES, ("STRING", "LIST"))
+        self.assertFalse(hasattr(self.node, "OUTPUT_IS_LIST"))
 
 
 if __name__ == "__main__":

@@ -6,17 +6,17 @@
 
 This is a custom node for Comfy UI.
 
-It mainly wraps `itertools.product` and can be used to create patterns by combining prompts.
+It creates prompt patterns by calculating cartesian products and concatenating text lists.
 
-This package works with a custom `LIST` socket that carries a Python `list[str]`. Typically, you create a `LIST` from strings with `Multiline String to List` or `Strings to List`, then pass it to the product and concatenation nodes.
+Results can be output in different forms depending on the intended use:
 
-You can also supply compatible `LIST` values from other custom nodes, such as Text List from the [WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui) or [CR Prompt List](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki/List-Nodes#cr-prompt-list) from [ComfyUI_Comfyroll_CustomNodes](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes).
-
-This Python `LIST` is passed through the workflow as one value. It is different from ComfyUI's sequential processing list; use `Text List to Sequence` only when downstream nodes should run once for each string.
+- `TextListProduct`: A `LIST` that can be passed to other list-processing nodes
+- `Producted String`: Both a multiline `STRING` and the same combinations as a `LIST`
+- `Text List to Sequence`: Sequential `STRING` values that run downstream nodes once per item
 
 ![ProductedString](doc/producted-string.png)
 
-In the screenshot above, WAS Text List nodes supply three compatible Python lists: `[1girl, 1boy]`, `[blonde_hair, crown]`, and `[beach, futuristic City]`. `Producted String` combines them into an 8-line (2 * 2 * 2) multiline string. The included string-to-LIST nodes can be used in the same position without WAS Node Suite.
+In the screenshot above, three Text List nodes supply `[1girl, 1boy]`, `[blonde_hair, crown]`, and `[beach, futuristic City]`. `Producted String` combines them into an 8-line (2 * 2 * 2) multiline string.
 
 ## Installation
 
@@ -27,7 +27,7 @@ It can be installed via Install Custom Nodes in the [ComfyUI Manager](https://gi
 
 ### ・ MultilineStringToList
 
-Converts a multiline string into a `LIST`, with one item per line.
+Creates a Python `list[str]` from a multiline string, with one item per line, and returns it through a `LIST` socket. This `LIST` travels through the workflow as one value.
 
 - `trim_whitespace` removes whitespace around each line. It is enabled by default.
 - `keep_empty_lines` preserves empty lines as empty string items. It is disabled by default.
@@ -37,9 +37,9 @@ For example, entering `red`, `green`, and `blue` on separate lines produces `["r
 
 ### ・ StringsToList
 
-Collects up to seven connected string inputs (`text_a` through `text_g`) into one `LIST` in input order. Unconnected inputs are skipped, while connected empty strings are preserved.
+Collects up to seven connected string inputs (`text_a` through `text_g`) into one Python `list[str]` in input order and returns it through a `LIST` socket. Unconnected inputs are skipped, while connected empty strings are preserved.
 
-Use this node when text values already come from separate nodes. Its output is compatible with the same `LIST` inputs as WAS Text List and other text-list nodes.
+Compatible `LIST` outputs from other custom nodes, including WAS Node Suite, can also be connected to this package's LIST inputs.
 
 ### ・ TextListToSequence
 
@@ -55,7 +55,7 @@ For sequential prompt generation, connect nodes as follows:
 
 ![TextListProduct](doc/text-list-product.png)
 
-This is a basic node. `TextListProduct` combines two lists and creates a new list joined by the specified separator.
+This is a basic node. `TextListProduct` combines two lists and returns the results as a new `LIST`, joined by the specified separator.
 
 `max_results` can be used to stop generation early when the cartesian product would become too large. `0` means unlimited.
 
@@ -75,17 +75,15 @@ These nodes also support `max_results` to cap the number of generated combinatio
 
 ![ProductedString](doc/producted-string.png)
 
-This is a further shorthand node for TextListProduct. It combines multiple lists and returns a multiline string with line breaks.
+Combines multiple lists and returns every combination in two forms: one newline-delimited `STRING` for display or saving, and one `LIST` for further list processing. Both outputs contain the same combinations in the same order.
 
-For general use, this node should work well.
-
-`max_results` can be used here as well to cap the number of generated lines.
+`newline_char` affects only the `STRING` output. `max_results` caps both outputs to the same number of combinations.
 
 ### ・ PromptPairConcat
 
 ![PromptPairConcat](doc/workflow_prompt_pair_concat.png)
 
-Takes two lists of prompts as input and combines each corresponding pair of elements using the specified separator.
+Takes two prompt lists, combines each corresponding pair with the specified separator, and returns the results as a `LIST`.
 
 `isClean` trims whitespace and removes duplicated separators inside each item before concatenation.
 
@@ -94,13 +92,10 @@ Takes two lists of prompts as input and combines each corresponding pair of elem
 
 ## Usage Examples
 
-You can use it to add a specified string at the beginning of the strings in the list.
-
-Enter expression patterns, pose patterns, and camera-work patterns in separate `Multiline String to List` nodes, then connect those lists to `Producted String` to generate every combination.
-
-To process each generated combination separately in ComfyUI, use `TextListProduct` instead of `Producted String`, then connect its output through `Text List to Sequence` to a normal string input such as `CLIP Text Encode`.
-
-If needed, the resulting text can still be passed to optional external nodes such as Save Text File from the WAS Node Suite.
+- Convert expression, pose, and camera-work patterns with `Multiline String to List`, then combine them with `Producted String` to output every combination as multiline text.
+- Add a fixed prefix to every string in a list.
+- Connect the `LIST` output from `Producted String` through `Text List to Sequence` to `CLIP Text Encode` or another regular string input for sequential generation.
+- Connect the multiline `STRING` from `Producted String` to a node such as Save Text File to save it externally.
 
 ## License
 
@@ -112,17 +107,18 @@ MIT
 
 Comfy UI のカスタムノードです。
 
-主にitertools.productをラップしたもので、プロンプトをかけ合わせてパターンを作ることに利用できます。
+主にプロンプトのリストの積や連結を行い、複数のプロンプトのパターンを作ることができます。
 
-このパッケージでは、Pythonの `list[str]` を運ぶ独自の `LIST` ソケットを使用します。基本的には `Multiline String to List` または `Strings to List` で文字列から `LIST` を作り、積や連結を行うノードへ渡します。
+処理結果は、用途に応じて次の形式で出力できます。
 
-[WAS Node Suite](https://github.com/WASasquatch/was-node-suite-comfyui)のText Listや、[ComfyUI_Comfyroll_CustomNodes](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes)の[CR Prompt List](https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki/List-Nodes#cr-prompt-list)など、ほかのカスタムノードが出力する互換 `LIST` を入力しても構いません。
-
-このPython `LIST` は、ワークフロー内では1つの値として渡されます。ComfyUIの逐次処理用リストとは別物で、各文字列について後段ノードを1回ずつ実行したい場合だけ `Text List to Sequence` を使用します。
+- `TextListProduct`：ほかのLIST処理へ渡せる `LIST`
+- `Producted String`：複数行の `STRING` と、同じ組み合わせを格納した `LIST`
+- `Text List to Sequence`：各要素を後段で1件ずつ処理するための逐次 `STRING`
 
 ![ProductedString](doc/producted-string.png)
 
-上のスクリーンショットでは、WASのText Listノードから互換Pythonリスト `[ 1girl, 1boy ]`、`[ blonde_hair, crown ]`、`[ beach, futuristic City ]` を受け取り、`Producted String` で8行（2 * 2 * 2）のマルチライン文字列を作っています。WAS Node Suiteを使わず、このパッケージの文字列→LISTノードを同じ位置に接続することもできます。
+上のスクリーンショットでは、3つのText Listノードから `[1girl, 1boy]`、`[blonde_hair, crown]`、`[beach, futuristic City]` を受け取り、`Producted String` で8行（2 * 2 * 2）のマルチライン文字列を作っています。
+
 ## インストール
 
 [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)のInstall Custom Nodesからインストールできます。
@@ -132,7 +128,7 @@ Comfy UI のカスタムノードです。
 
 ### ・ MultilineStringToList
 
-複数行の文字列を、1行につき1要素の `LIST` に変換します。
+複数行の文字列から、1行につき1要素のPython `list[str]` を作成し、`LIST` ソケットから出力します。この `LIST` は、ワークフロー内では1つの値として扱われます。
 
 - `trim_whitespace` は各行の前後空白を除去します。既定で有効です。
 - `keep_empty_lines` は空行を空文字列の要素として保持します。既定では無効です。
@@ -142,9 +138,9 @@ Comfy UI のカスタムノードです。
 
 ### ・ StringsToList
 
-接続された最大7個の文字列入力（`text_a`～`text_g`）を、入力順に1つの `LIST` へまとめます。未接続の入力は無視し、接続された空文字列は保持します。
+別々のノードから受け取った最大7個の文字列入力（`text_a`～`text_g`）を、入力順に1つのPython `list[str]` へまとめ、`LIST` ソケットから出力します。未接続の入力は無視し、接続された空文字列は保持します。
 
-文字列が別々のノードから渡される場合に使用します。出力はWASのText Listなどが出力する `LIST` と同様に、このパッケージのLIST入力へ接続できます。
+なお、同じ `LIST` 型を出力するWAS Node Suiteなどのノードも、このパッケージのLIST入力へ接続できます。
 
 ### ・ TextListToSequence
 
@@ -160,7 +156,7 @@ Pythonのテキスト `LIST` を、ComfyUI標準の逐次処理用 `STRING` 出�
 
 ![TextListProduct](doc/text-list-product.png)
 
-基本的なノード。`TextListProduct` は、2つのリストを掛け合わせて、指定されたセパレータで結合した新しいリストを作成します。
+基本的なノード。`TextListProduct` は、2つのリストを掛け合わせ、指定されたセパレータで結合した結果を新しい `LIST` として出力します。
 
 `max_results` を使うと、組み合わせ数が大きくなりすぎる場合でも途中で打ち切れます。`0` は無制限です。
 
@@ -180,17 +176,15 @@ Pythonのテキスト `LIST` を、ComfyUI標準の逐次処理用 `STRING` 出�
 
 ![ProductedString](doc/producted-string.png)
 
-さらにTextListProductのショートハンドノードです。複数のリストを掛け合わせて、改行を加えて複数行の文字列にして返します。
+複数のリストを掛け合わせ、すべての組み合わせを2つの形式で出力します。出力0は、結果全体の表示や保存に使える複数行の `STRING` です。出力1は、同じ組み合わせを同じ順序で格納した、後段のLIST処理に使える `LIST` です。
 
-とりあえずこれを使えば間違いない。
-
-このノードでも `max_results` を使って出力行数の上限を設定できます。
+`newline_char` は `STRING` 出力だけに適用されます。`max_results` は両方の出力を同じ件数に制限します。
 
 ### ・ PromptPairConcat
 
 ![PromptPairConcat](doc/workflow_prompt_pair_concat.png)
 
-2つのプロンプトリストを入力として受け取り、それぞれのリスト要素を指定したセパレータで結合します。zip関数のようなもの。
+2つのプロンプトリストを入力として受け取り、それぞれのリスト要素を指定したセパレータで結合し、`LIST` として出力します。zip関数のようなものです。
 
 `isClean` を有効にすると、各要素の前後空白や余分なセパレータを整理してから結合します。
 
@@ -198,19 +192,16 @@ Pythonのテキスト `LIST` を、ComfyUI標準の逐次処理用 `STRING` 出�
 
 ## 使用例
 
-リストの文字列の先頭に指定の文字列を加えたいとか。
-
-表情、ポーズ、カメラワークの各パターンを別々の `Multiline String to List` ノードへ入力し、それぞれを `Producted String` へ接続すると、すべての組み合わせを生成できます。
-
-生成した組み合わせをComfyUIで1件ずつ処理する場合は、`Producted String` ではなく `TextListProduct` を使い、その出力を `Text List to Sequence` 経由で `CLIP Text Encode` などの通常の文字列入力へ接続します。
-
-必要であれば、生成した文字列をWAS Node SuiteのSave Text Fileなど、任意の外部ノードへ渡すこともできます。
+- 表情、ポーズ、カメラワークの各パターンを `Multiline String to List` でLIST化し、`Producted String` で掛け合わせて、すべての組み合わせを複数行の文字列として出力できます。
+- リスト内の各文字列の先頭へ、指定した文字列を付け足せます。
+- `Producted String` の `LIST` 出力を、`Text List to Sequence` 経由で `CLIP Text Encode` などへ接続し、1件ずつ連続生成できます。
+- `Producted String` が出力した複数行の `STRING` を、Save Text Fileなどのノードへ接続して外部ファイルに保存できます。
 
 ## Workflow
 
 ![Workflow](doc/workflow_textlistproduct.png)
 
-この画像ではWASのText Listが互換 `LIST` を供給しています。同じ位置に、このパッケージの `Multiline String to List` または `Strings to List` を接続することもできます。
+この画像のText Listノードは、このパッケージの `Multiline String to List` または `Strings to List` に置き換えられます。
 
 ## License
 
