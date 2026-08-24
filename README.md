@@ -20,7 +20,9 @@ In the screenshot above, three Text List nodes supply `[1girl, 1boy]`, `[blonde_
 
 ## Installation
 
-It can be installed via Install Custom Nodes in the [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)
+It can be installed via Install Custom Nodes in the [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager).
+
+See [ComfyUI_TextListProduct on the ComfyUI Registry](https://registry.comfy.org/nodes/ComfyUI_TextListProduct) for the published package and available versions.
 
 
 ## Nodes
@@ -122,6 +124,8 @@ Comfy UI のカスタムノードです。
 ## インストール
 
 [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)のInstall Custom Nodesからインストールできます。
+
+公開パッケージと利用可能なバージョンは、[ComfyUI RegistryのComfyUI_TextListProductページ](https://registry.comfy.org/nodes/ComfyUI_TextListProduct)で確認できます。
 
 
 ## ノード
